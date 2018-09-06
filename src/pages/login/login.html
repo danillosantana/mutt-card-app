@@ -1,0 +1,36 @@
+<ion-content padding center text-center>
+  <form  [formGroup]="loginForm" > 
+    <ion-grid>
+      <ion-row>
+       <ion-title>Mutt Card</ion-title>
+      </ion-row>  
+      
+      <ion-row>
+       <ion-list >
+ 
+         <ion-item col-12>
+           <ion-label>Login</ion-label>
+           <ion-input type="text" [(ngModel)]="usuario.email" formControlName="txtLogin" required maxlength="100"></ion-input>
+         </ion-item>
+       
+         <ion-item col-12>
+           <ion-label>Senha</ion-label>
+           <ion-input type="password" [(ngModel)]="usuario.senha" formControlName="txtSenha" required maxlength="10"></ion-input>
+         </ion-item>
+       
+       </ion-list>
+      </ion-row>
+ 
+      <div padding>
+       <ion-row>
+         <ion-col col-12>
+             <button ion-button color="danger" (click)="login()">Login</button>
+         </ion-col>
+         <ion-col col-12>
+             <button ion-button color="dark" (click)="novoUsuario()" clear>Não é cadastrado?</button>
+         </ion-col>
+       </ion-row>
+       </div>
+   </ion-grid>
+  </form>
+</ion-content>
