@@ -1,0 +1,8 @@
+{
+  "name": "mutt-card-app",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular",
+  "pro_id": "df4aae95"
+}
