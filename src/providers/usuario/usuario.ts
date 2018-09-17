@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpProvider } from '../http/http';
 
-// import { API } from '../../app/util/API';
+import { API } from '../../config/app-config'
 
 /*
   Generated class for the UsuarioProvider provider.
@@ -22,7 +22,7 @@ export class UsuarioProvider {
    * @param usuario 
    */
   login(usuario) {
-    return this.http.post('http://192.168.0.13:8080/mutt-card-web/usuario/login', usuario);
+    return this.http.post(API+'usuario/login', usuario);
   }
 
   /**
@@ -31,8 +31,6 @@ export class UsuarioProvider {
    * @param usuario 
    */
   salvar(usuario) {
-    return this.http.post('http://192.168.0.13:8080/mutt-card-web/usuario/salvar', usuario);
+    return this.http.post(API+'usuario/salvar', usuario);
   }
-
 }
-

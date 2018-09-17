@@ -35,7 +35,10 @@ export class UsuarioPage {
    * Inicializa as propriedades para manipulação do formulário
    */
   public inicializarLoginForm() {
+    this.usuario.pessoa = {};
+    
     this.usuarioForm = new FormGroup({
+      txtNome: new FormControl(this.usuario.nome,[Validators.required, Validators.maxLength(100)]),
       txtEmail: new FormControl(this.usuario.email,[Validators.required, Validators.maxLength(100)]),
       txtSenha : new FormControl(this.usuario.senha, [Validators.required, Validators.maxLength(10), Validators.minLength(6)]),
       txtConfirmacaoSenha : new FormControl(this.usuario.senha, [Validators.required, Validators.maxLength(10), Validators.minLength(6)])
@@ -58,12 +61,19 @@ export class UsuarioPage {
       res => {
       this.usuarioSession.salvar(res)
       .then(() => {
-        this.navCtrl.push(TabsPage);
+        this.usuarioSession.inicializarUsuarioSession()
+        .then( () => {
+          this.navCtrl.push(TabsPage);
+        })
+        .catch(e => {
+          this.mensagens.adicionarMensagemErro(e);
+        });
       })
-      .catch( e => this.mensagens.adicionarMensagemErro(e.error))
+      .catch( e => {
+        this.mensagens.adicionarMensagemErro(e)
+      })
     },
     err => {
-        console.log('err', err);
         this.mensagens.adicionarMensagemErro(err.error);
       }
     )

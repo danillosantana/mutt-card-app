@@ -1,36 +1,46 @@
-<ion-content padding center text-center>
-  <form  [formGroup]="loginForm" > 
-    <ion-grid>
-      <ion-row>
-       <ion-title>Mutt Card</ion-title>
-      </ion-row>  
-      
-      <ion-row>
-       <ion-list >
- 
-         <ion-item col-12>
-           <ion-label>Login</ion-label>
-           <ion-input type="text" [(ngModel)]="usuario.email" formControlName="txtLogin" required maxlength="100"></ion-input>
-         </ion-item>
-       
-         <ion-item col-12>
-           <ion-label>Senha</ion-label>
-           <ion-input type="password" [(ngModel)]="usuario.senha" formControlName="txtSenha" required maxlength="10"></ion-input>
-         </ion-item>
-       
-       </ion-list>
-      </ion-row>
- 
-      <div padding>
-       <ion-row>
-         <ion-col col-12>
-             <button ion-button color="danger" (click)="login()">Login</button>
-         </ion-col>
-         <ion-col col-12>
-             <button ion-button color="dark" (click)="novoUsuario()" clear>Não é cadastrado?</button>
-         </ion-col>
-       </ion-row>
-       </div>
-   </ion-grid>
-  </form>
+<!-- -->
+<ion-content padding class="animated fadeIn login auth-page">
+  <div class="login-content">
+
+    <!-- Logo -->
+    <div padding-horizontal text-center class="animated fadeInDown">
+      <div class="logo"></div>
+      <h2 ion-text class="text-primary">
+        <strong>MuttCard</strong> Cartão Fidelidade
+      </h2>
+    </div>
+
+    <!-- Login form -->
+    <form class="list-form" [formGroup]="loginForm">
+      <ion-item>
+        <ion-label floating>
+          <ion-icon name="mail" item-start class="text-primary"></ion-icon>
+          <span class="required">Email</span>
+        </ion-label>
+        <ion-input type="email" [(ngModel)]="usuario.email" formControlName="txtEmail" ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>
+          <ion-icon name="lock" item-start class="text-primary"></ion-icon>
+          <span class="required">Senha</span>
+        </ion-label>
+        <ion-input type="password" [(ngModel)]="usuario.senha" formControlName="txtSenha" maxlength="10"></ion-input>
+      </ion-item>
+    </form>
+
+    <div>
+      <button ion-button icon-start block color="text-primary"  tappable (click)="login()">
+        <ion-icon name="log-in"></ion-icon>
+        Login
+      </button>
+    </div>
+
+
+    <!-- Other links -->
+    <div text-center margin-top>
+      <span ion-text color="secondary" tappable (click)="novoUsuario()">Não é Cadastrado? <strong>Registre-se</strong></span>
+    </div>
+
+  </div>
 </ion-content>

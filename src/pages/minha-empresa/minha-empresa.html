@@ -1,0 +1,74 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title >
+      <a (click)="voltar()">
+          <ion-icon name="md-arrow-back" item-start class="text-primary"></ion-icon>
+      </a>
+      <span *ngIf="acaoSistemaProvider.isAcaoSistemaIncluir()">Cadastrar Empresa</span>
+      <span *ngIf="acaoSistemaProvider.isAcaoSistemaAlterar()">Alterar Empresa</span>  
+    </ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding overflow-scroll="true" >
+  <ion-scroll style="width:100%;height:100vh;overflow-y: scroll" scrollY="true">
+      <form  class="list-form"  [formGroup]="empresaForm" > 
+          <ion-list >
+              <ion-item col-12>
+                  <ion-label>
+                      <span class="required">Nome</span>
+                  </ion-label>
+                  <ion-input type="text" [(ngModel)]="empresa.pessoa.nome" formControlName="txtNome" required maxlength="100"></ion-input>
+              </ion-item>
+              <ion-item col-12>
+                  <ion-label col-4>
+                      <span class="required">Estado</span>
+                  </ion-label>
+                  <ion-select col-8 [(ngModel)]="empresa.estado" formControlName="txtEstado" 
+                              cancelText="Cancelar" okText="Ok" required
+                              (ionChange)="buscarMunicipios()">
+                      <ion-option *ngFor="let estado of estados" [value]="estado">{{estado.nome}}</ion-option>
+                  </ion-select>
+              </ion-item>
+              <ion-item col-12>
+                <ion-label col-4>
+                    <span class="required">Municipio</span>
+                </ion-label>
+                <ion-select col-8 [(ngModel)]="empresa.pessoa.municipio" formControlName="txtMunicipio" 
+                            cancelText="Cancelar" okText="Ok" required>
+                    <ion-option *ngFor="let municipio of municipios" [value]="municipio">{{municipio.nome}}</ion-option>
+                </ion-select>
+            </ion-item>
+            <ion-item col-12>
+                <ion-label col-4>
+                    <span class="required">Categoria</span>
+                </ion-label>
+                <ion-select col-8 [(ngModel)]="empresa.categoria" formControlName="txtCategoria" 
+                            cancelText="Cancelar" okText="Ok" required>
+                    <ion-option *ngFor="let categoria of categorias" [value]="categoria">{{categoria.descricao}}</ion-option>
+                </ion-select>
+            </ion-item>
+            <ion-item col-12>
+                <ion-label col-4>
+                    <span class="required">Telefone</span>
+                </ion-label>
+                <ion-input col-8 type="text" [(ngModel)]="empresa.pessoa.telefone" formControlName="txtTelefone" [brmasker]="{mask:'(62) 0000-0000', len:14}" required></ion-input>
+            </ion-item>
+            <ion-item col-12>
+                    <ion-label col-4>
+                        <span class="required">Anúncio</span>
+                    </ion-label>
+                <ion-textarea col-8  [(ngModel)]="empresa.anuncio" formControlName="txtAnuncio"></ion-textarea>
+            </ion-item>
+            <ion-item >
+                <button ion-button icon-start block color="text-primary"  tappable (click)="salvar()">
+                        <ion-icon name="log-in"></ion-icon>
+                       <span *ngIf="acaoSistemaProvider.isAcaoSistemaIncluir()">Salvar</span>
+                       <span *ngIf="acaoSistemaProvider.isAcaoSistemaAlterar()">Alterar</span> 
+                </button>
+            </ion-item>
+          </ion-list>
+      </form>
+  </ion-scroll>
+</ion-content>

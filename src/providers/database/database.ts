@@ -39,7 +39,7 @@ export class DatabaseProvider {
    * Cria as tabelas do banco.
    */
   public createTable(db : SQLiteObject) {
-    db.sqlBatch([' CREATE TABLE IF NOT EXISTS usuario(id integer primary key not null, email TEXT, token TEXT)'])
+    db.sqlBatch([' CREATE TABLE IF NOT EXISTS usuario(id integer primary key not null, nome TEXT, email TEXT, token TEXT)'])
     .then(() => console.log('Tabelas criadas'))
     .catch(e => console.error('Erro ao criar tabelas', e));
   }

@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
-import { LoadingController } from 'ionic-angular';
+import { tap, retry } from 'rxjs/operators';
 
+import { LoaderProvider } from '../loader/loader';
+import { UsuarioSessionProvider } from '../../providers/usuario-session/usuario-session';
 /*
   Generated class for the HttpProvider provider.
 
@@ -14,10 +15,12 @@ import { LoadingController } from 'ionic-angular';
 @Injectable()
 export class HttpProvider {
 
-  constructor( private http: HttpClient, public loadingCtrl: LoadingController ) { }
+  constructor( private http: HttpClient, public loader: LoaderProvider ) { }
  
-    get(url: string) {
-        return this.watch(this.http.get<any>(url));
+  token  = UsuarioSessionProvider.usarioSesion != undefined ? UsuarioSessionProvider.usarioSesion.token : undefined;
+    
+  get(url: string) {
+        return this.watch(this.http.get<any>(url, {headers : { token : this.token}}));
     }
     
     /**
@@ -26,37 +29,31 @@ export class HttpProvider {
      * @param url 
      */
     downloadFile(url: string) { 
-      const loader = this.loadingCtrl.create({
-        content: "Aguarde...",
-        });
-      loader.present();
+      this.loader.loaderAguarde(); 
         this.http.get(url, { responseType: 'blob' }).subscribe(
             data => {
-              loader.dismiss(); 
+              this.loader.encerrar(); 
               var file = new Blob([data], {type: 'application/pdf'});
               var fileURL = URL.createObjectURL(file);
               window.open(fileURL);
             },
-            e => { loader.dismiss(); } 
+            e => { this.loader.encerrar(); } 
           );
     }
     
     post(url: string, data) {
-      return this.watch(this.http.post<any>(url, data));
+      return this.watch(this.http.post<any>(url, {headers : { token : this.token}}, data ));
     }
      
     //fazer também para o post, put, delete ...
     private watch(response: Observable<any>) {
-      const loader = this.loadingCtrl.create({
-        content: "Aguarde...",
-      });
-      
-      loader.present();
+      this.loader.loaderAguarde();
 
         return response.pipe(
+           retry(2),
             tap(
-              data => loader.dismiss(),
-              error => loader.dismiss()
+              data => this.loader.encerrar(),
+              error => this.loader.encerrar()
             ),
         );    
     }
