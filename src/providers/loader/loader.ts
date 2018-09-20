@@ -7,7 +7,8 @@ import { LoadingController } from 'ionic-angular';
 @Injectable()
 export class LoaderProvider {
 
-  private loader : any;
+  static loader : any;
+  static ativo : boolean = false;
 
   constructor(public loadingCtrl: LoadingController) {
     
@@ -18,26 +19,35 @@ export class LoaderProvider {
    * 
    */
   loaderCarregando() {
-    this.loader = this.loadingCtrl.create({
-        content: "Carregando...",
-    });
-    this.loader.present();
+    if (!LoaderProvider.ativo) {
+      LoaderProvider.loader = this.loadingCtrl.create({
+          content: "Carregando...",
+      });
+      LoaderProvider.loader.present();
+      LoaderProvider.ativo = true;
+    }
   }
 
   /**
    * Exibe loader de aguardando.
    */
   loaderAguarde() {
-    this.loader = this.loadingCtrl.create({
-      content: "Aguarde...",
-    });
-    this.loader.present();
+    if (!LoaderProvider.ativo) {
+      LoaderProvider.loader = this.loadingCtrl.create({
+        content: "Aguarde...",
+      });
+      LoaderProvider.loader.present();
+      LoaderProvider.ativo = true;
+    }
   }
 
   /**
    * Fecha o loader. 
    */
   encerrar() {
-    this.loader.dismiss();
+    if (LoaderProvider.ativo) {
+      LoaderProvider.loader.dismiss();
+      LoaderProvider.ativo = false;
+    }
   }
 }

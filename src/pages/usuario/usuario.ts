@@ -56,6 +56,7 @@ export class UsuarioPage {
    *  Salva o usuário.
    */
   public salvar() {
+    console.log('usuario', this.usuario);
     this.usuarioProvider.salvar(this.usuario)
     .subscribe(
       res => {

@@ -5,6 +5,8 @@ import { MyApp } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 
 import { BrMaskerModule } from 'brmasker-ionic-3';
+import { File } from '@ionic-native/file';
+import { Camera } from '@ionic-native/camera';
 
 import { MeusCartoesPage } from '../pages/meus-cartoes/meus-cartoes';
 import { ContactPage } from '../pages/contact/contact';
@@ -27,6 +29,7 @@ import { MensagensProvider } from '../providers/mensagens/mensagens';
 import { LoaderProvider } from '../providers/loader/loader';
 import { EmpresaProvider } from '../providers/empresa/empresa';
 import { AcaoSistemaProvider } from '../providers/acao-sistema/acao-sistema';
+import { ArquivoProvider } from '../providers/arquivo/arquivo';
 
 @NgModule({
   declarations: [
@@ -44,7 +47,7 @@ import { AcaoSistemaProvider } from '../providers/acao-sistema/acao-sistema';
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpClientModule,
-    BrMaskerModule
+    BrMaskerModule,
   ],
   exports : [
     BrMaskerModule
@@ -75,8 +78,10 @@ import { AcaoSistemaProvider } from '../providers/acao-sistema/acao-sistema';
     LoaderProvider,
     EmpresaProvider,
     AcaoSistemaProvider,
-    AcaoSistemaProvider,
-    BrMaskerModule
+    BrMaskerModule,
+    File,
+    Camera,
+    ArquivoProvider
   ]
 })
 export class AppModule {}

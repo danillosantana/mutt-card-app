@@ -60,6 +60,18 @@
   color: #fff;
 }
 
+.text-red {
+  color: red;
+}
+
+.text-black {
+  color : black;
+}
+
+.text-gray {
+  color : gray;
+}
+
 //
 .dark-trans,
 .toast-md .toast-wrapper {
@@ -201,6 +213,10 @@
 
 .text-sm {
   font-size: 0.7em;
+}
+
+.text-rigth {
+  text-align: right !important;
 }
 
 .bold {

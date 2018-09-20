@@ -2,10 +2,18 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
-import { tap, retry } from 'rxjs/operators';
+import { HttpHeaders } from '@angular/common/http';
+import { retry } from 'rxjs/operators';
 
-import { LoaderProvider } from '../loader/loader';
 import { UsuarioSessionProvider } from '../../providers/usuario-session/usuario-session';
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type':  'application/json',
+    'token': UsuarioSessionProvider.usarioSesion.token != undefined ? UsuarioSessionProvider.usarioSesion.token : ''
+  })
+};
+
 /*
   Generated class for the HttpProvider provider.
 
@@ -15,12 +23,11 @@ import { UsuarioSessionProvider } from '../../providers/usuario-session/usuario-
 @Injectable()
 export class HttpProvider {
 
-  constructor( private http: HttpClient, public loader: LoaderProvider ) { }
+  constructor( private http: HttpClient ) { }
  
-  token  = UsuarioSessionProvider.usarioSesion != undefined ? UsuarioSessionProvider.usarioSesion.token : undefined;
-    
   get(url: string) {
-        return this.watch(this.http.get<any>(url, {headers : { token : this.token}}));
+       let token =  UsuarioSessionProvider.usarioSesion.token != undefined ? UsuarioSessionProvider.usarioSesion.token : '';
+        return this.watch(this.http.get<any>(url, {headers : { token : token}}));
     }
     
     /**
@@ -28,33 +35,29 @@ export class HttpProvider {
      * 
      * @param url 
      */
-    downloadFile(url: string) { 
-      this.loader.loaderAguarde(); 
+    downloadFile(url: string) {  
         this.http.get(url, { responseType: 'blob' }).subscribe(
-            data => {
-              this.loader.encerrar(); 
+            data => { 
               var file = new Blob([data], {type: 'application/pdf'});
               var fileURL = URL.createObjectURL(file);
               window.open(fileURL);
             },
-            e => { this.loader.encerrar(); } 
+            e => { } 
           );
     }
     
     post(url: string, data) {
-      return this.watch(this.http.post<any>(url, {headers : { token : this.token}}, data ));
+      let token =  UsuarioSessionProvider.usarioSesion.token != undefined ? UsuarioSessionProvider.usarioSesion.token : '';
+      return this.watch(this.http.post<any>(url, data, {headers : {  
+        token : token
+        }
+      }));
     }
      
     //fazer também para o post, put, delete ...
     private watch(response: Observable<any>) {
-      this.loader.loaderAguarde();
-
         return response.pipe(
-           retry(2),
-            tap(
-              data => this.loader.encerrar(),
-              error => this.loader.encerrar()
-            ),
+           retry(2)
         );    
     }
 }
