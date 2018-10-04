@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title >
+      <a (click)="voltar()">
+          <ion-icon name="md-arrow-back" item-start class="text-primary"></ion-icon>
+      </a>
+      <span *ngIf="acaoSistemaProvider.isAcaoSistemaListar()">Cartões Minha Empresa</span>
+      <span *ngIf="acaoSistemaProvider.isAcaoSistemaAlterar()">Incluir Cartões Minha Empresa</span>
+      <span *ngIf="acaoSistemaProvider.isAcaoSistemaIncluir()">Alterar Cartões Minha Empresa</span>  
+    </ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+    
+</ion-content>

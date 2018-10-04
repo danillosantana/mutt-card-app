@@ -8,7 +8,8 @@ import { LoadingController } from 'ionic-angular';
 export class LoaderProvider {
 
   static loader : any;
-  static ativo : boolean = false;
+  // static ativo : boolean = false;
+  static cont : number = 0;
 
   constructor(public loadingCtrl: LoadingController) {
     
@@ -19,35 +20,39 @@ export class LoaderProvider {
    * 
    */
   loaderCarregando() {
-    if (!LoaderProvider.ativo) {
+    if (LoaderProvider.cont == 0) {
       LoaderProvider.loader = this.loadingCtrl.create({
           content: "Carregando...",
       });
       LoaderProvider.loader.present();
-      LoaderProvider.ativo = true;
-    }
+      
+    } 
+
+    LoaderProvider.cont++;
   }
 
   /**
    * Exibe loader de aguardando.
    */
   loaderAguarde() {
-    if (!LoaderProvider.ativo) {
+    if (LoaderProvider.cont == 0) {
       LoaderProvider.loader = this.loadingCtrl.create({
         content: "Aguarde...",
       });
       LoaderProvider.loader.present();
-      LoaderProvider.ativo = true;
     }
+
+    LoaderProvider.cont++;
   }
 
   /**
    * Fecha o loader. 
    */
   encerrar() {
-    if (LoaderProvider.ativo) {
+    LoaderProvider.cont--;
+    if (LoaderProvider.cont <= 0) {
       LoaderProvider.loader.dismiss();
-      LoaderProvider.ativo = false;
+      LoaderProvider.cont = 0;
     }
   }
 }

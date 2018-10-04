@@ -1,5 +1,5 @@
 <ion-content padding overflow-scroll="true"  class="animated fadeIn login auth-page">
-        <ion-scroll style="width:100%;height:100vh;overflow-y: scroll" scrollY="true">
+        <ion-scroll style="height:180vh;overflow-y: scroll;" scrollY="true">
             <div class="login-content">
                 
                 <div padding-horizontal text-center class="animated fadeInDown">
@@ -13,32 +13,32 @@
                     <ion-grid>
                           <ion-row>
                            <ion-list >
-                              <ion-item col-12>
-                                  <ion-label>
+                              <ion-item >
+                                  <ion-label floating>
                                       <ion-icon name="person" item-start class="text-primary"></ion-icon>
                                       <span class="required">Nome</span>
                                   </ion-label>
-                                  <ion-input type="text" [(ngModel)]="usuario.pessoa.nome" formControlName="txtNome" required maxlength="100"></ion-input>
+                                  <ion-input type="text" [(ngModel)]="usuario.nome" formControlName="txtNome" required maxlength="100"></ion-input>
                               </ion-item>
             
-                             <ion-item col-12>
-                                <ion-label>
-                                    <ion-icon name="mail" item-start class="text-primary"></ion-icon>
-                                    <span class="required">Email</span>
+                             <ion-item >
+                                <ion-label floating>
+                                    <ion-icon name="call" item-start class="text-primary"></ion-icon>
+                                    <span class="required">Telefone</span>
                                 </ion-label>
-                               <ion-input type="email" [(ngModel)]="usuario.email" formControlName="txtEmail" required maxlength="100"></ion-input>
+                               <ion-input type="tel" pattern="[0-9]*" maxLength="11" [(ngModel)]="usuario.telefone" formControlName="txtTelefone" required></ion-input>
                              </ion-item>
                            
-                             <ion-item col-12>
-                                <ion-label>
+                             <ion-item >
+                                <ion-label floating>
                                     <ion-icon name="lock" item-start class="text-primary"></ion-icon>
                                     <span class="required">Senha</span>
                                 </ion-label>
                                <ion-input type="password" [(ngModel)]="usuario.senha" formControlName="txtSenha" required maxlength="10"></ion-input>
                              </ion-item>
                     
-                             <ion-item col-12>
-                                <ion-label>
+                             <ion-item >
+                                <ion-label floating>
                                     <ion-icon name="lock" item-start class="text-primary"></ion-icon>
                                     <span class="required">Confirmação de Senha</span>
                                 </ion-label>

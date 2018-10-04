@@ -8,7 +8,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from '../pages/login/login';
 import { DatabaseProvider } from '../providers/database/database';
 import { UsuarioSessionProvider } from '../providers/usuario-session/usuario-session';
-
+import { MensagensProvider } from '../providers/mensagens/mensagens';
 
 @Component({
   templateUrl: 'app.html'
@@ -18,11 +18,9 @@ export class MyApp {
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, 
               dbProvider: DatabaseProvider, usuarioSessionProvider : UsuarioSessionProvider, 
-              public loader: LoaderProvider) {
+              public loader: LoaderProvider, public mensagensProvider : MensagensProvider ) {
     loader.loaderCarregando();            
     platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       
       dbProvider.createDataBase()
@@ -37,9 +35,16 @@ export class MyApp {
           }
           loader.encerrar();
         })
-        .catch(e => console.error('Falha ao inicializar o usuário na sessão.', e));
+        .catch(e =>{
+          console.log('Falha ao inicializar o usuário', e);
+          mensagensProvider.adicionarMensagemErro("Falha ao inicializar o usuário.");
+          } 
+        );
       })  
-      .catch(e => console.error('Falha ao inicializar o db.', e));
+      .catch(e => {
+        console.log('Falha ao criar banco de dados', e);
+        mensagensProvider.adicionarMensagemErro("Falha ao criar banco de dados.");
+      })
     });
   }
 }

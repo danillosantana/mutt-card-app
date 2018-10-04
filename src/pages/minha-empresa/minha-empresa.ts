@@ -3,7 +3,6 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 
-
 import { UsuarioProvider } from '../../providers/usuario/usuario';
 import { EmpresaProvider } from '../../providers/empresa/empresa'
 import { UsuarioSessionProvider } from '../../providers/usuario-session/usuario-session';
@@ -62,7 +61,7 @@ export class MinhaEmpresaPage {
       txtNome: new FormControl(this.empresa.pessoa.nome, [Validators.required, Validators.maxLength(100)]),
       txtCidade: new FormControl(this.empresa.pessoa.municipio, [Validators.required, Validators.maxLength(100)]),
       txtEstado : new FormControl(this.empresa.estado, [Validators.required]),
-      txtTelefone : new FormControl(this.empresa.pessoa.telefone, [Validators.required,Validators.pattern('[0-9]*'),  Validators.maxLength(14)]),
+      txtTelefone : new FormControl(this.empresa.pessoa.telefone, [Validators.required,Validators.pattern('[0-9]*'), Validators.minLength(10),  Validators.maxLength(11)]),
       txtCategoria : new FormControl(this.empresa.categoria, [Validators.required]),
       txtAnuncio : new FormControl(this.empresa.anuncio, [Validators.maxLength(100)]),
       txtMunicipio : new FormControl(this.empresa.pessoa.municipio, [Validators.required])
@@ -76,24 +75,29 @@ export class MinhaEmpresaPage {
    * Inicializa as dependências do caso de uso.
    */
   public inicializarDependencias() {
+    this.loader.loaderAguarde();
+
     //inicializando as categorias
     this.empresaProvider.getCategorias()
     .subscribe( data => {
-      this.loader.loaderAguarde();
       this.categorias = data;
 
       //inicializando os estados
       this.empresaProvider.getEstados()
         .subscribe( data => {
           this.estados = data;
+
           //inicializa as empresas.  
           this.inicializarEmpresa();
         }, err => {
-          this.mensagens.adicionarMensagemErro(err.error);
+          this.loader.encerrar();
+          this.mensagens.adicionarMensagemHttpErro(err);
       });
     },
-    err => 
-      this.mensagens.adicionarMensagemErro(err.error)
+    err => {
+        this.loader.encerrar();
+        this.mensagens.adicionarMensagemHttpErro(err)
+      }
     );
   }
 
@@ -127,7 +131,8 @@ export class MinhaEmpresaPage {
       }
     },
     err => {
-      this.mensagens.adicionarMensagemErro(err.error);
+      this.loader.encerrar();
+      this.mensagens.adicionarMensagemHttpErro(err);
    });
   }
 
@@ -143,7 +148,8 @@ export class MinhaEmpresaPage {
           this.imagem = this.imagem.replace(/(\r\n\t|\n|\r\t)/gm,"");
           this.loader.encerrar();
       }, err => {
-        this.mensagens.adicionarMensagemErro(err.error);
+        this.loader.encerrar();
+        this.mensagens.adicionarMensagemHttpErro(err.error);
       })
     }
   }
@@ -162,7 +168,8 @@ export class MinhaEmpresaPage {
             this.definirMunicipio();
           },
           err => {
-            this.mensagens.adicionarMensagemErro(err.error);
+            this.loader.encerrar();
+            this.mensagens.adicionarMensagemHttpErro(err);
         });
       }
     });
@@ -188,7 +195,7 @@ export class MinhaEmpresaPage {
         this.municipios = data;
       },
       err => {
-        this.mensagens.adicionarMensagemErro(err.error);
+        this.mensagens.adicionarMensagemHttpErro(err);
      });      
 		} 
   }
@@ -242,7 +249,8 @@ export class MinhaEmpresaPage {
       this.voltar();
     },
     err => {
-      this.mensagens.adicionarMensagemErro(err.error);
+      this.loader.encerrar();
+      this.mensagens.adicionarMensagemHttpErro(err);
    });
   }
 }

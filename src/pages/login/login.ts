@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { UsuarioProvider } from '../../providers/usuario/usuario';
+import { LoaderProvider } from '../../providers/loader/loader';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UsuarioSessionProvider } from '../../providers/usuario-session/usuario-session';
+
 import { TabsPage } from '../tabs/tabs';
 import { MensagensProvider } from '../../providers/mensagens/mensagens';
 import { UsuarioPage } from '../usuario/usuario';
@@ -26,7 +28,7 @@ export class LoginPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
               public usuarioProvider : UsuarioProvider, public usuarioSession : UsuarioSessionProvider,
-              private mensagens: MensagensProvider) {
+              private mensagens: MensagensProvider, public loader : LoaderProvider) {
     this.inicializarLoginForm();
   }
 
@@ -35,7 +37,7 @@ export class LoginPage {
    */
   inicializarLoginForm() {
     this.loginForm = new FormGroup({
-      txtEmail: new FormControl('',[Validators.required, Validators.maxLength(100)]),
+      txtTelefone: new FormControl('',[Validators.required, Validators.minLength(10), Validators.maxLength(11)]),
       txtSenha : new FormControl('', [Validators.required, Validators.maxLength(10), Validators.minLength(6)])
     });
   }
@@ -44,11 +46,13 @@ export class LoginPage {
    * Realiza o login.
    */
   login() {
+    this.loader.loaderAguarde();
     this.usuarioProvider.login(this.usuario)
     .subscribe(
       res => {
       this.usuarioSession.salvar(res)
       .then(() => {
+        this.loader.encerrar();
         this.usuarioSession.inicializarUsuarioSession()
         .then( () => {
           this.navCtrl.push(TabsPage);
@@ -57,10 +61,11 @@ export class LoginPage {
           this.mensagens.adicionarMensagemErro(e);
         });
       })
-      .catch( e => this.mensagens.adicionarMensagemErro(e.error))
+      .catch( e => this.mensagens.adicionarMensagemErro(e))
     },
     err => {
-        this.mensagens.adicionarMensagemErro(err.error);
+        this.loader.encerrar();
+        this.mensagens.adicionarMensagemHttpErro(err);
       }
     )
   }

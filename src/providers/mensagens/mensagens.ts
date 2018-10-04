@@ -1,5 +1,6 @@
 import { AlertController } from 'ionic-angular';
 import { Injectable } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 /*
@@ -20,8 +21,31 @@ export class MensagensProvider {
    * 
    * @param msg 
    */
-  public adicionarMensagemErro(msg) {
+  public adicionarMensagemHttpErro(httpErrorResponse : HttpErrorResponse) {
+    let msg = this.getMensagemErro(httpErrorResponse);
     this.criarAlerta(msg, 'Atenção');
+  }
+
+/**
+   * Exibe mensagem de erro na tela.
+   * 
+   * @param msg 
+   */
+  public adicionarMensagemErro(msg : string) {
+    this.criarAlerta(msg, 'Atenção');
+  }
+
+  /**
+   * Retorna a mensagem de error.
+   * 
+   * @param httpErrorResponse 
+   */
+  private getMensagemErro(httpErrorResponse : HttpErrorResponse) {
+    if (!httpErrorResponse.ok && httpErrorResponse.status == 0) {
+      return  "Falha de conexão. Tente mais tarde."
+    } else {
+      return httpErrorResponse.error;
+    }
   }
 
   /**

@@ -23,7 +23,7 @@ export class UsuarioSessionProvider {
   inicializarUsuarioSession() {
     return this.dbProvider.getDB()
     .then((db: SQLiteObject) => {
-      return db.executeSql('SELECT id, nome, email, token FROM usuario ', [])
+      return db.executeSql('SELECT id, nome, telefone, token FROM usuario ', [])
       .then( res => {
         console.log('inicializa usuário na sessão...');
         if (res.rows.length > 0) {
@@ -31,9 +31,7 @@ export class UsuarioSessionProvider {
          UsuarioSessionProvider.usarioSesion = res.rows.item(0);
         } 
      })
-     .catch(e => console.error('Falha ao inicializar  o usuário', e));
     })
-    .catch(e => console.error('Falha ao inicializar  o banco', e)); 
   }
 
   /**
@@ -42,16 +40,16 @@ export class UsuarioSessionProvider {
   salvar(usuario) {
     return this.dbProvider.getDB()
     .then((db: SQLiteObject) => {
-      return db.executeSql('SELECT id, nome, email, token FROM usuario ', [])
+      return db.executeSql('SELECT id, nome, telefone, token FROM usuario ', [])
       .then((resultado) => {
         if (resultado.rows.length > 0) {
           return this.deleteUsuarios()
                 .then(() => {
-                  return db.executeSql('INSERT INTO usuario (id, nome, email, token) VALUES(?, ?, ?, ?) ', [usuario.id, usuario.nome, usuario.email, usuario.token]) 
+                  return db.executeSql('INSERT INTO usuario (id, nome, telefone, token) VALUES(?, ?, ?, ?) ', [usuario.id, usuario.nome, usuario.telefone, usuario.token]) 
                 });
         }
 
-        return db.executeSql('INSERT INTO usuario (id, nome, email, token) VALUES(?, ?, ?, ?) ', [usuario.id, usuario.nome, usuario.email, usuario.token])
+        return db.executeSql('INSERT INTO usuario (id, nome, telefone, token) VALUES(?, ?, ?, ?) ', [usuario.id, usuario.nome, usuario.telefone, usuario.token])
       })
     })
   }

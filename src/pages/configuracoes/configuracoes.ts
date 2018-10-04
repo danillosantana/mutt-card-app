@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { MinhaEmpresaPage } from '../minha-empresa/minha-empresa';
 
+import { MinhaEmpresaPage } from '../minha-empresa/minha-empresa';
+import { CartaoFidelidadeEmpresaPage } from '../cartao-fidelidade-empresa/cartao-fidelidade-empresa';
 
 /**
  * Generated class for the ConfiguracoesPage page.
@@ -24,7 +25,14 @@ export class ConfiguracoesPage {
   /**
    * Navega para a página 'Minha Empresa'.
    */
-  minhaEmpresa() {
+  showMinhaEmpresa() {
     this.navCtrl.push(MinhaEmpresaPage);
+  }
+
+  /**
+   * Navega para a página 'Cartoes Minha Empresa'.
+   */
+  showCartaoMinhaEmpresa() {
+    this.navCtrl.push(CartaoFidelidadeEmpresaPage);
   }
 }

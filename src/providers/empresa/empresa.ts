@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpProvider } from '../http/http';
 
 import { API } from '../../config/app-config'
-import { Thumbnail } from '../../../node_modules/ionic-angular/umd';
+
 
 /**
  * Provider responsável por fornecer os serviços da empresa.
@@ -60,4 +60,12 @@ export class EmpresaProvider {
 		return this.http.get(API+'registro/getMunicipiosPorEstado/'+idEstado);
 	}
 
+	/**
+	 * Retorna o registro cadastrado para o responsável informado.
+	 * 
+	 * @param idResponsavel 
+	 */
+	public getRegistroTOPorResponsavel(idResponsavel)  { 
+		return this.http.get(API+'registro/getRegistroTOPorResponsavel/'+idResponsavel);
+	}
 }

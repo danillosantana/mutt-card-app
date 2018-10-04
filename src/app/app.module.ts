@@ -16,6 +16,7 @@ import { LoginPage  } from '../pages/login/login';
 import { UsuarioPage } from '../pages/usuario/usuario';
 import { ConfiguracoesPage } from '../pages/configuracoes/configuracoes';
 import { MinhaEmpresaPage } from '../pages/minha-empresa/minha-empresa';
+import { CartaoFidelidadeEmpresaPage } from '../pages/cartao-fidelidade-empresa/cartao-fidelidade-empresa'; 
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -30,6 +31,7 @@ import { LoaderProvider } from '../providers/loader/loader';
 import { EmpresaProvider } from '../providers/empresa/empresa';
 import { AcaoSistemaProvider } from '../providers/acao-sistema/acao-sistema';
 import { ArquivoProvider } from '../providers/arquivo/arquivo';
+import { CartaoFidelidadeEmpresaProvider } from '../providers/cartao-fidelidade-empresa/cartao-fidelidade-empresa';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,8 @@ import { ArquivoProvider } from '../providers/arquivo/arquivo';
     LoginPage,
     UsuarioPage,
     ConfiguracoesPage,
-    MinhaEmpresaPage
+    MinhaEmpresaPage,
+    CartaoFidelidadeEmpresaPage
   ],
   imports: [
     BrowserModule,
@@ -62,7 +65,8 @@ import { ArquivoProvider } from '../providers/arquivo/arquivo';
     LoginPage,
     UsuarioPage,
     ConfiguracoesPage,
-    MinhaEmpresaPage
+    MinhaEmpresaPage,
+    CartaoFidelidadeEmpresaPage
   ],
   providers: [
     StatusBar,
@@ -81,7 +85,9 @@ import { ArquivoProvider } from '../providers/arquivo/arquivo';
     BrMaskerModule,
     File,
     Camera,
-    ArquivoProvider
+    ArquivoProvider,
+    CartaoFidelidadeEmpresaProvider,
+    CartaoFidelidadeEmpresaProvider
   ]
 })
 export class AppModule {}

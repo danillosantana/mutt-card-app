@@ -12,57 +12,57 @@
 </ion-header>
 
 <ion-content padding overflow-scroll="true" >
-  <ion-scroll style="width:100%;height:100vh;overflow-y: scroll" scrollY="true">
+  <ion-scroll style="height:150vh;overflow-y: scroll;" scrollY="true">
       <div row>
          <ion-item col-12 class="text-rigth"><span class="required text-red text-sm">Campos Obrigatórios</span></ion-item>
       </div>
       <form  class="list-form"  [formGroup]="empresaForm" > 
           <ion-list >
-              <ion-item col-12>
-                  <ion-label col-4>
-                      <span class="required">Nome</span>
+              <ion-item >
+                  <ion-label  floating>
+                      <span class="required">Nome Empresa</span>
                   </ion-label>
-                  <ion-input col-12 type="text" [(ngModel)]="empresa.pessoa.nome" formControlName="txtNome" required maxlength="100"></ion-input>
+                  <ion-input  type="text" [(ngModel)]="empresa.pessoa.nome" formControlName="txtNome" required maxlength="100"></ion-input>
               </ion-item>
-              <ion-item col-12>
-                  <ion-label col-4>
+              <ion-item >
+                <ion-label floating>
+                    <span class="required">Categoria</span>
+                </ion-label>
+                <ion-select  [(ngModel)]="empresa.categoria" formControlName="txtCategoria" 
+                            cancelText="Cancelar" okText="Ok" required>
+                    <ion-option *ngFor="let categoria of categorias" [value]="categoria">{{categoria.descricao}}</ion-option>
+                </ion-select>
+            </ion-item>
+              <ion-item >
+                  <ion-label  floating>
                       <span class="required">Estado</span>
                   </ion-label>
-                  <ion-select col-8 [(ngModel)]="empresa.estado" formControlName="txtEstado" 
+                  <ion-select  [(ngModel)]="empresa.estado" formControlName="txtEstado" 
                               cancelText="Cancelar" okText="Ok" required
                               (ionChange)="buscarMunicipios()">
                       <ion-option *ngFor="let estado of estados" [value]="estado">{{estado.nome}}</ion-option>
                   </ion-select>
               </ion-item>
-              <ion-item col-12>
-                <ion-label col-4>
-                    <span class="required">Municipio</span>
+              <ion-item >
+                <ion-label  floating>
+                    <span class="required">Cidade</span>
                 </ion-label>
-                <ion-select col-8 [(ngModel)]="empresa.pessoa.municipio" formControlName="txtMunicipio" 
+                <ion-select  [(ngModel)]="empresa.pessoa.municipio" formControlName="txtMunicipio" 
                             cancelText="Cancelar" okText="Ok" required>
                     <ion-option *ngFor="let municipio of municipios" [value]="municipio">{{municipio.nome}}</ion-option>
                 </ion-select>
             </ion-item>
-            <ion-item col-12>
-                <ion-label col-4>
-                    <span class="required">Categoria</span>
-                </ion-label>
-                <ion-select col-8 [(ngModel)]="empresa.categoria" formControlName="txtCategoria" 
-                            cancelText="Cancelar" okText="Ok" required>
-                    <ion-option *ngFor="let categoria of categorias" [value]="categoria">{{categoria.descricao}}</ion-option>
-                </ion-select>
-            </ion-item>
-            <ion-item col-12>
-                <ion-label col-4>
+            <ion-item >
+                <ion-label  floating>
                     <span class="required">Telefone</span>
                 </ion-label>
-                <ion-input col-8 type="number" pattern="[0-9]*" [(ngModel)]="empresa.pessoa.telefone" formControlName="txtTelefone"  required maxLength="14"></ion-input>
+                <ion-input  type="tel" pattern="[0-9]*" [(ngModel)]="empresa.pessoa.telefone" formControlName="txtTelefone"  required maxLength="11"></ion-input>
             </ion-item>
-            <ion-item col-12>
-                    <ion-label col-4>
+            <ion-item >
+                    <ion-label  floating>
                         <span>Anúncio</span>
                     </ion-label>
-                <ion-textarea col-8  [(ngModel)]="empresa.anuncio" formControlName="txtAnuncio" maxLength="100"></ion-textarea>
+                <ion-textarea   [(ngModel)]="empresa.anuncio" formControlName="txtAnuncio" maxLength="100"></ion-textarea>
             </ion-item>
             <ion-item *ngIf="!imagem">
                 <button col-12 ion-button color="secondary" (click)="adicionaImagem()">Selecione Imagem</button>
@@ -77,11 +77,12 @@
                 <img src="{{'data:image/png;base64,' + imagem}}">
               </ion-item>
             <ion-item >
-                <button ion-button block color="text-primary"  tappable (click)="salvar()" [disabled]="!empresaForm.valid">
+                <button ion-button block color="text-primary"  tappable (click)="salvar()">
                        <span *ngIf="acaoSistemaProvider.isAcaoSistemaIncluir()">Salvar</span>
                        <span *ngIf="acaoSistemaProvider.isAcaoSistemaAlterar()">Alterar</span> 
                 </button>
             </ion-item>
+            
           </ion-list>
       </form>
   </ion-scroll>
